@@ -47,6 +47,8 @@ print header, version, netinfo
 def get_key(value):
     return next(key for key, lst in modules.iteritems() for item in lst if item == value)
 
+# Main entry point
+
 def main():
     print LC + "Type in a command. For system commands, type 'help'.\nFor available modules, type 'modules'. Exit with Ctrl + C or 'exit'.\n"
     while True:
@@ -56,7 +58,9 @@ def main():
             continue
         elif options == "modules":
             print LR + "\n[There are currently """ + LP + "{}".format(sum(len(lst) for lst in modules.values())) + LR + " modules available:]\n" + LG
+            # Iterate over each key value in the modules dict
             for protocol, module_list in modules.items():
+                # For each item in each sublist, print
                 for mod in module_list:
                     print "{}\t\t({})".format(str(mod), str(protocol))        
             print "\n"
@@ -68,6 +72,7 @@ def main():
             raise EOFError
         elif options.startswith("use"):
             modname = options.split()[1]
+            # return a list of all concatenated sublists
             mod_list = [name for lst in modules.values() for name in lst]
             if modname in mod_list:
                 print LISTMSG
@@ -92,4 +97,3 @@ if __name__ == "__main__":
         exit()
     except IndexError:
         print R + "[!] Module not found! [!]"
-        

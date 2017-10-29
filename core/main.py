@@ -10,6 +10,8 @@ from subprocess import call
 from scapy.all import *
 from scapy.error import Scapy_Exception
 
+# GLOBAL VARIABLES!
+
 W = '\033[0m'  # white (normal)
 R = '\033[31m'  # red
 G = '\033[32m'  # green
@@ -35,6 +37,8 @@ else:
 
 WARNING = R + "Not recognized!" + W
 LISTMSG =  LC + "Type 'list' to show all of available attack vectors" + W
+
+# Unpacks each list, and create a help menu
 
 def print_command_help(command_help):
     print LR + ("\n[Commands Available:]\n""") + LG

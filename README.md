@@ -75,10 +75,11 @@ Example of the __ssh__ bruteforce module in use (__TODO__: obsolete, replace vid
 
 * [] Misc. module - may include embedded and IOT attack vectors
 * [] Automate `git pull` as an auto "updater"
-* Modules:
+* [] Modules:
   - driftnet
   - smtp enumeration
   - mimikatz
+* [] Installer / Uninstaller
 
 ### IV. Issues?
 
