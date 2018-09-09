@@ -54,27 +54,13 @@ First, `git clone`.
 Change directory, and then run the installer script (Must be root or have superuser permissions):
 
     $ cd /path/to/dedsploit
-    $ ./installer
-
-The `installer` script will install of the necessary dependencies for you.
-
-
-Once finished, execute with:
-
-    $ dedsploit
-
-If you decide to build from source, do keep in mind that you may remove the repository you clone after installation, since dedsploit has been reinstalled elsewhere and is now part of your `$PATH`.
+    $ ./dedsploit
 
 ---
-
-Example of the __ssh__ bruteforce module in use (__TODO__: obsolete, replace video!):
-
-[![asciicast](https://asciinema.org/a/atqn7b3j8j24qzgtfhz3flqho.png)](https://asciinema.org/a/atqn7b3j8j24qzgtfhz3flqho)
 
 ### III. TODO
 
 * [] Misc. module - may include embedded and IOT attack vectors
-* [] Automate `git pull` as an auto "updater"
 * [] Modules:
   - driftnet
   - smtp enumeration
