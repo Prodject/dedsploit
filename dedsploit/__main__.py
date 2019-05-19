@@ -3,19 +3,17 @@ import os
 import sys
 import platform
 
-import dedsploit.core as core
-from dedsploit.modules import http, net, smtp
+from .modules import http, net, smtp
+from .consts import ColorScheme as col
 
-# Available modules
-modules = {
+MODULES = {
     "http":     ["slowloris"],
     "net":      ["arpspoof", "pscan", "hosts"],
     "smtp":     ["smsbomb"]
 }
 
 
-# Display visually appealing output!
-header = C + """
+HEADER = C + """
     .___         .___             .__         .__  __
   __| _/____   __| _/____________ |  |   ____ |__|/  |_
  / __ |/ __ \ / __ |/  ___/\____ \|  |  /  _ \|  \   __|
@@ -25,11 +23,19 @@ header = C + """
 \n""" + W
 
 
-# Print authors, versions and available modules/attack vectors
-version = LG + """\n
-         [   Written By: the dedsploit team     ]
+VERSION = LG + """\n
          [   Version: 3.0.0                     ]
-         [   Modules: %s                         ]\n""" % len(modules) + W
+         [   Modules: %s                         ]\n""" % len(MODULES) + W
+
+
+HELP_OPTIONS = [
+    ("help", "Display available commands and modules"),
+    ("modules", "Show modules that can be used"),
+    ("clear", "Move the screen up to clear it"),
+    ("update", "Update dedsploit!"),
+    ("exit", "Exit the program or current module"),
+    ("use ...", "Select a module for use")
+]
 
 
 def print_command_help(command_help):
@@ -45,7 +51,7 @@ def get_key(value):
     """
     returns values from each sublist within a dict
     """
-    return next(key for key, lst in modules.iteritems() for item in lst if item == value)
+    return next(key for key, lst in MODULES.iteritems() for item in lst if item == value)
 
 
 def main():
@@ -54,9 +60,9 @@ def main():
     if platform.system() != "Linux":
         print(R + "[!] You are not using Linux! dedsploit may not work! [!]" + W)
 
-    # print header and info
-    print(header, version, netinfo)
-    print(LC + "Type in a command. For system commands, type 'help'.\nFor available modules, type 'modules'. Exit with Ctrl + C or 'exit'.\n")
+    # print HEADER and info
+    print(HEADER, VERSION)
+    print(LC + "For available commands, type 'help'.\nFor available modules, enter 'modules'. Exit with Ctrl + C or 'exit'.\n")
 
     # input loop
     while True:
@@ -66,25 +72,19 @@ def main():
             print(f"{LR}\n[Commands Available:]\n{LG}")
             print_command_help(help_options)
             continue
-        elif options == "modules":
-            print(LR + "\n[There are currently " + LP + "{}".format(sum(len(lst) for lst in modules.values())) + LR + " modules available:]\n" + LG
 
-            # Iterate over each key value in the modules dict
-            for protocol, module_list in modules.items():
+        elif options == "modules":
+            print(LR + "\n[There are currently " + LP + "{}".format(sum(len(lst) for lst in MODULES.values())) + LR + " modules available:]\n" + LG)
+            for protocol, module_list in MODULES.items():
                 for mod in module_list:
                     print("{}\t\t({})\n".format(str(mod), str(protocol)))
             continue
-        elif options == "clear":
-            os.system("clear")
-            continue
-        elif options == "exit":
-            raise EOFError
+
         elif options.startswith("use"):
 
             # return a list of all concatenated sublists
             modname = options.split()[1]
-            mod_list = [name for lst in modules.values() for name in lst]
-
+            mod_list = [name for lst in MODULES.values() for name in lst]
             if modname in mod_list:
                 print(LISTMSG)
                 protocol = get_key(modname)
@@ -96,15 +96,24 @@ def main():
                     smtp.SMTP(modname).execute()
             else:
                 print(WARNING)
+
+        elif options == "clear":
+            os.system("clear")
+            continue
+
+        elif options == "exit":
+            break
+
         else:
             print(WARNING)
             continue
+
 
 if __name__ == "__main__":
     try:
         main()
     except (KeyboardInterrupt, EOFError):
-        print LR + "\n[!] Goodbye! Remember to Hack the Gibson!" + W
+        print(LR + "\n[!] Goodbye! Remember to Hack the Gibson!" + W)
         exit()
     except IndexError:
-        print R + "[!] Module not found! [!]"
+        print(R + "[!] Module not found! [!]" + W)

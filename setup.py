@@ -22,7 +22,6 @@ setup(
         ],
     },
     install_requires=[
-        'smtplib',
         'scapy',
         'nmap',
     ],
