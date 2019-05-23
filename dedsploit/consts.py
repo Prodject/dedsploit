@@ -1,9 +1,18 @@
 """
 consts.py
 
-Defines global module-wide constants to be used
-during execution
+Defines global module-wide constants and helpers 
+to be used during execution
 """
+
+def print_command_help(command_help):
+    """
+    unpacks each list, and create a help menu
+    """
+    help_map = dict(command_help)
+    for h in help_map:
+        print("{0}\t\t\t{1}".format(h, help_map[h]))
+
 
 class ColorScheme:
     W = '\033[0m'           # white (normal)

