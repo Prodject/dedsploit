@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+"""
+setup.py
+
+    Installs dedpsloit CLI entry point
+
+"""
+
 from setuptools import setup, find_packages
 
 # main setup method
@@ -5,7 +13,7 @@ setup(
     name = "dedsploit",
     version = "4.0.0",
     author = "Alan Cao",
-    author_email = "ex0dus@codemuch.tech",
+    author_email = "ex0dus at codemuch.tech",
     description = "network auditing framework",
     license = "MIT",
     url = "https://github.com/ex0dus-0x/dedsploit",
