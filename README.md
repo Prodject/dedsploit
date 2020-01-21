@@ -1,75 +1,68 @@
 # dedsploit
 
-Framework for attacking network protocols and network exploitation.
+Network protocol auditing framework
 
-__Official Website:__ http://dedsploit.tech
+## intro
 
-![Logo](logo.png)
+__dedsploit__ is an open-sourced network protocol auditing framework that supports the use of various plugin modules for
+attacking various network-based protocols.
 
-## CHANGELOG: v3.0.0 10/29/17
+> NOTE: This is a project made from my earliest days, so development will be inactive, with sparse changes over time for consistency.
 
-Introducing the newest version of dedsploit. While many of the modules that have been presented in the earlier versions have been removed, the overall quality of the framework has been improved and revamped for usability.
+## usage
 
-* Removed the protocol/attack vector system, and make it so that the pentester can select their attack vector immediately from the start. 
-* Did some redesigning, and improved the overall code quality.
+In order to use __dedsploit__ you can either install through `pip`:
 
-We hope that you enjoy this rendition of your favorite penetration testing framework!
+```
+$ pip3.6 install dedsploit --user
+```
 
-### I. Introduction
+or install manually:
 
-This framework aims to exploit and attack some common every-day vulnerabilities, whether it is a misconfiguration of a SSH server, or even the utilization of `apache2` as a web server, which could be subjected to malicious __Slowloris__ DoS attacks.
+```
+$ python setup.py install
+# .. or `develop` for a local build for development
+```
 
-The framework comprises of several attack vectors:
+To run:
 
-    http
-    ==========
-    * slowloris
-    
-    net
-    ==========
-    * arpspoof
-    * hosts
-    * pscan
-    
-    smtp
-    ==========
-    * smsbomb
-    
-More modules will be deployed on a rolling basis.
+```
+$ dedsploit
 
-### II. Installation & Usage
+    .___         .___             .__         .__  __
+  __| _/____   __| _/____________ |  |   ____ |__|/  |_
+ / __ |/ __ \ / __ |/  ___/\____ \|  |  /  _ \|  \   __|
+/ /_/ \  ___// /_/ |\___ \ |  |_> >  |_(  <_> )  ||  |
+\____ |\___  >____ /____  >|   __/|____/\____/|__||__|
+     \/    \/     \/    \/ |__|
 
-In order to install this program, it is best that you are on a __Linux-based__ distro, preferably __Kali-Linux__. You may also be on macOS, but this rollout is tentative and may be buggy.
 
-## Quick n' Dirty One-liner
 
-    $ curl https://raw.githubusercontent.com/ex0dus-0x/dedsploit/master/installer | sudo /bin/bash 
+         [   Version: 3.0.0                     ]
+         [   Modules: 3                         ]
 
-## Building from Source
+For available commands, type 'help'.
+For available modules, enter 'modules'. Exit with Ctrl + C or 'exit'.
 
-First, `git clone`.
+[>>] help
 
-    $ git clone https://github.com/ex0dus-0x/dedsploit
+[Commands Available:]
 
-Change directory, and then run the installer script (Must be root or have superuser permissions):
+help                    Display available commands and modules
+modules                 Show modules that can be used
+clear                   Move the screen up to clear it
+update                  Update dedsploit!
+exit                    Exit the program or current module
+use ...                 Select a module for use
+[>>]
+```
 
-    $ cd /path/to/dedsploit
-    $ ./dedsploit
+## contributions
 
----
+While this project is largely inactive, it will be very beneficial for someone to adopt and continue its development, with focuses oriented on
+usage during CTF/wargames and/or bughunting. This can be in the form of supporting new attack vectors and modules, building support for new features
+like a plugin manager, and etc.
 
-### III. TODO
+## license
 
-* [] Misc. module - may include embedded and IOT attack vectors
-* [] Modules:
-  - driftnet
-  - smtp enumeration
-  - mimikatz
-* [] Installer / Uninstaller
-
-### IV. Issues?
-
-If you ever have any issues regarding the source code of this framework, as well as any errors you have encountered, please do not hesitate to open a new issue!
-
-Of course, suggestions for modules and attack vectors are always welcome. dedsploit is a young yet-to-mature framework,
-and we wish to make the best for penetration testers.
+[mit](https://codemuch.tech/license.txt)

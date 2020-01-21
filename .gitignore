@@ -1,5 +1,8 @@
-*.pyc
-scapy-2.3.1/
-scapy.zip
 venv/
+build/
+dist/
+*.egg-info/
+
+scapy*
+*.pyc
 env_vars
